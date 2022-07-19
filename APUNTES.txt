@@ -1,0 +1,697 @@
+history -c command
+
+git config --global user.name "Tu nombre"
+git config --global user.email "Tu correo"
+
+para cerrar sesion
+git config --global --unset user.email "colocar email"
+
+git config --global --list
+
+
+___________________________
+
+pipes tuberias en ingles
+
+es una forma de transformar info que esta puesta en el html, visualemnte, y lo transformamos
+en otra cosa visualmente
+
+lo trae el common module de angular |
+se sabe usar po ejemplo cuando se tiene la base de datos todo en minuscula
+pero se lo quiere mostrar por pantalla capitalizado, para no tener que hacer esa conversion
+angular ofrece los pipes
+
+vamos a usar primeengine
+
+librerias
+
+primefaces.org/primeng/
+es un conjunto de componetes personalizados ya estilizados que se ven lindos y se puede programar
+un poco mas rapido, porque no hay que pensanr tanto en como hacer una tabla , un input
+calendario, notificacion, etc
+
+y en la documentacion oficial
+angular.io para ver la doc de pipes
+y hay que importar el paquete common
+
+para usar los pipes va en una expresion del html es  decir entre {{}}
+
+___________________
+
+instalar primeng
+
+para instalar el modulo
+npm install primeng --save
+npm install primeicons --save
+
+me hice otro proyecto pipesPrimeng
+porque no podia instalar el primeng por tenemas de version angular, me tiraba error
+
+para utilizar temas (osea el fondo) gratuitos de primeng tenemos que instalarlos en styles
+
+y se instala en el archivo angular.json
+
+los assets 
+le dicen a angular que son recursos estaticos en el build
+par que cuando este en desarrollo tome esos estilos
+
+y en styles va entre commillas y separado por comas porque es json
+
+_______________
+
+buscar segmento boton para el tema
+
+entonces omo tenemos que importar un modulo
+tenemos que ir al app.module.ts
+ahi lo colocamos
+y tambien lo colocamos en el import 
+ButtonModule
+
+y tenemos 2 forma de utilizarlo, por directiva o por componente
+
+https://primefaces.org/primeng/button
+
+y hay que respetar la forma de utilizarlo. por ejemplo si lo pongo al nombre del boton
+dentro de los >NombreBoton< se ve mal porque por ahi primeng acepta otras cosas como h2, etc
+
+para que se apliquen todos los estilos vela azul
+
+hay que definirlo en el style global
+
+styles.css
+
+puedo hacer uqe en el css use una varibale que esta definido en el root del theme.css
+de esta forma  font-family: var(--font-family)
+lo mismo con el background-color
+
+y asi se aplicaria el fondo para un thema de primeng
+
+
+se agrega una clase para el estilo del texto en la general
+se toma el valor que esta en el theme de la importada
+
+para lo iconos hay que pasarle los atributos
+icon al boton
+
+para los colores se  ve el tipo de la clase para el morado seria la clase para help
+
+<button pButton type="button" label="Help" class="p-button-help"></button>
+
+para el color morado se agrega class="p-button-help
+
+implementar la tarjeta
+
+abajo del boton
+
+importar modulo
+
+se define la tarjeta en el html
+
+y ya trae atributos para usar
+
+para que el valor del header lo tome a paritr de un valor de la propiedad
+hay que decir que para el heade tome el valor de la propiedad de componentes ts
+encerrando entre []
+
+______________________
+
+llevar cada parte del html a componentes para que no quede el app.module
+muy grande
+
+se genera un modulo para primeNg
+
+ng g m primeNg
+
+se pasa las importaciones para la tarjeta y boton 
+al nuevo modulo creado 
+
+y voy a usar ese module creado
+para exportar los modulos para card y boton
+en export , los importo y luego los mando al export
+
+eso es todo lo que va hace reste modulo
+
+y luego desde app.module lo importamos al modulo personalizado donde tenemos los botones y cards
+
+//primeNg
+import {PrimeNgModule} from './prime-ng/prime-ng.module'
+
+y se agrega el PrimeNgModule en los imports
+
+entonces si necesitamos agregar otro modulo de primeNg
+LO AGREAMOS AL MODUELO de primeNg solamente
+
+
+
+____________________
+
+MENUBAR DE PRIMENG
+
+se crea otra carpeta llamada shared
+donde vamos a guardar los navbar, sidebar,footer, headers, cualqier cosa que quiera que 
+sea global en la aplicacion
+
+se  crea otra llamanda ventas, donde se va a manejar , simbolos, porcentajes, numeros
+cosas asi
+
+se crea dentro de esa carpeta una llamada pipes , para los pipes personalizados
+
+y otra carpeta para la paginas que quiero mostrar dentro de ventas
+
+y otra mas para interfaces en caso que se necesite tipado en caso de ser necesario
+
+se crear un modulo para ventas y lo crea en la carpeta ventas
+ng g m ventas
+
+lo mismo para shared
+se crea un modulo
+
+ahora se crea un componente para mostrar el menu
+dentor de la carpeta shared
+
+ng g c shared/menu
+
+como se quiere utilizar el module sahred o sea el menu componet
+hay que exportarlo para que se lo pueda usar desde app component html
+
+y se va a importar el modulo shared, al module de primeNg , para no volver a tocar el 
+app module
+
+desde el primeng llama al menuModule que ya trae la libreria primeng llamada menubar
+para poder verlo desde el app component html
+tenemos que importarlo
+lo importamos desde sharedModule porque en ese modulo importa el menubar de primeng
+
+parte 9
+
+https://primefaces.org/primeng/menubar
+
+si llamo al menubar de primeng en el component html tira error
+
+tengo que importarlo en el modulo de shared para poder usarlo, hay que llamarlo desde PrimeNgModuel donde definimos eso
+
+hay que armarlo como dice la doc, hay que importar el MenuItem tambien 
+
+y luego hacer la parte de getting started
+para agregar los opciones del menu
+
+en resumen,
+en app module solamente llama a un modulo shared donde valos a tener ahi todo lo relacionado
+a los menu sidebar, nivbar, etc
+este moudleo shared como va a necesitar los moduelos de prime ng llama a ese moduelo que tiene 
+todos los elementos a usar de lo que ofrece
+este modulo llamado es primeNgModule, y shared moudelo exporta el menu componente llamado de primeModule 
+para que se lo pueda usar desde otro componente
+
+luego el modulo primeNgModule creado por mi, es el que llama a todo lo relacionado a la libreria PrimeNg
+solmente llama los modulos de card, menu, todo lo que sea necerario utiliar de la libreia primeNg
+y lo exporta para los otros modulos
+
+________________________________________
+
+se crea un modulo para las rutas
+
+ng g m appRouter --flat
+
+el flat es para que no cree una  carpeta llamada appRouter
+
+para definir la rutas, esa sentencia porque son las turas principales
+RouteModule.forRoot(rutas)
+rutas es una lista de rutas
+
+
+se crean las paginas, que serian componentens en la carpeta page
+
+ng g c ventas/pages/numeros 
+me crea el componente numeros en la carpeta numeros
+
+ng g c ventas/pages/noComunes
+
+otras se crear basicos, ordenar
+
+luego en app router module
+
+definimos una lista routes para crear las rutas
+y se la pasamos en el ngmodule
+
+una vez agregado todas las paginas por url
+
+como se van a utilizar los componentes fuera del modulo de  ventas
+hay que exportarlos
+
+entonces desde el modulo app componetns 
+necesita saber las rutas de la aplicacion
+entonces lo importamos al moduelo app route donde estan las rutas de la aplicacion
+
+y despues llamamos a <router-oulet><router-outlet> en el app.component html
+
+para el menu lo vemos directamente en menu ts
+y la lista items que tenemos es tipo menuitems
+por lo que tiene un formato
+
+y en routerLink se coloca el nombre de la url definido en app router
+
+luego en el menu component html
+
+se agrega una icono para el menu 
+agregando <img src ="direccion de la imagen"> en la sentencia para llamar al moduelo de menu 
+de primeNg
+
+<p-menubar [model]="items">
+    <img src="./favicon.ico">
+</p-menubar>
+
+_________________________
+
+PRIMEFLEX
+
+primefaces.org/primeng/showcase/#/primeflex
+para installar
+npm install primeflex --save
+
+packege.json
+
+se agrega en el package.json
+
+y el angular.json
+
+se agrega en el primeflex.css
+
+en el style de angular.json
+
+la idea es hacer una tabla y que cada columna
+sea flex, una tarjeta 
+
+class="p-grid"
+
+tenemos que importar el modulo primeNgModule en ventas.module
+
+y en el app.module se importa el modulo de ventasModulo
+
+tenemos que agregarlo al app.moudel al modelo
+de ventas porque tengo que especificar que ese modulo va a ser
+parte de mi aplicacion
+
+__________________
+
+pipe date
+
+angular.io/api/common/DatePipe
+
+anduvo 
+
+install PrimeNG and PrimeFlex
+
+npm install primeng --save
+
+npm i primeflex@2.0.0 --save
+add style to angular.json
+
+"./node_modules/primeng/resources/primeng.css",
+
+"./node_modules/primeflex/primeflex.css"
+Please use primeflex 2.0.0 , Latest version (3+) have some issues.
+
+si funciona
+
+para el date es del primeNg de ahi se saca para el tema del pipe para fechas
+
+________________________
+
+PARA CAMBIAR IDIOMA
+
+VAMOS A APP.MODULE
+
+import localeEs from '@angular/common/locales/muestra todos los paises'
+es-HN de honduras 
+y luego se llama una funcion de commons llamada registerLocaleData
+import { registerLocaleData } from '@angular/common';
+
+// se llama la funcion
+registerLocaleData(localeEs);
+
+en providers 
+se agrega 
+{provide : LOCALE_ID}
+y como segundo parametro el valor del idioma que importamos en
+'es-HN'
+TAMBIEN SE CAMBIAN LAS MONEDAS AL FORMA DEL PAIS QUE IMPORTAMOS
+
+
+________________________________
+
+timezone
+
+el date me da la fehca de la maquina
+
+si lo quiero en otro GTMT
+
+y le tenemos que pasar el argumento en le pipe 
+
+{{fecha | date:'long':'GMT-6'}}
+
+PARA QUE salga en otro idioma la fecha o cualquier cotra cosa que quiera traducir
+en el html tengo que importarlo en el app module
+solamente no hace flata importa el idioma ingles, lo carga por defecto
+
+import localeFr from '@angular/common/locales/fr';
+
+y luego registrarlo con la funcion
+
+registerLocaleData(localeFr);
+
+el locales que se importe aparte del idioma tambien trae el tema de los decimasles
+con punto o como, moneda etc que tenga esa localidad
+
+______________________________
+
+DECIMAL PIPE
+
+se crean las propiedades en el component numeros
+
+y se los llaman en el html
+
+el decimal pipe agrega las comas de miles y redondea a 3 decialmes por defecto
+
+si queremos el signo de dolar podemos usarlo desde primeNg
+
+{{ventasNetas | number: '1.2-2'}}
+lo pone a 2 decimales y redondea
+el 1. estaria indicando el numero entero pero podria ser tambien dejarlo como .2-2
+se aplica el pipe como resultado de la expresion del numero
+
+_____________________________
+
+CURRENCY PIPE
+
+si se pone el pipe currency muestra la moneda en dolar por defecto
+pero tambien se le puede pasar por parametro lo que se quiere que muestre
+
+currency:'ARS'
+
+__________
+
+primeNg FiledSet
+
+si pone p-md-6, cuando se la cantidad de columnas menor a 6 por achichar la pantalla
+del navegador, la columana va a tomar todo en una sola
+
+en el modulo de primeNG module creado por mi
+importamos el modulo para usar filset
+
+FieldsetModule
+
+importamos y exportamos
+
+tenemos que usar el moduelo de angular BrowserAnitationsModule
+en el app. module
+
+la propierdad togagle de prime ng da la propiedad para que se expanda
+
+los [] se indican que le estoy asociendo un valor a la propiedad de un componente
+[toggleable] = "true"
+
+para el efecto de que se vea como con burbujita cuando se hace click en el boton
+
+hay que importar ese configuracion, que es un servicio que hay que inyectar
+en el app.components.ts
+
+import {PrimeNGConfig} from 'primeng/api'
+
+ constructor(private primeNGConfig: PrimeNGConfig){}
+
+en el  ngOnInit()
+
+y ya estaria funcionando
+se podria aplicar para los botones etc
+en los botones del menu tambien los tiene 
+
+__________________
+
+
+pipe para que detecte el argumento que estamos mandando y haga match
+
+la palabra que se quiere cambiar de genero se la coloca en {{}}
+
+y con el pipe18nSelect
+y al pipe se le pasa el maping que se obligatorio 
+
+tengo que cambiar el nombre y genero
+y eso hace match con lo que defini en invitacionMapa
+
+se define una serie de opciones en el InvitacionMapa
+y se hace conincidir el argumento genero que estamos enviando
+
+
+_____________
+
+para el i18nPlural
+
+se le pasa como parametro el Map clientes
+
+tendriamos que definir ahi el macheo para cada cantidad 
+
+y para el other seria
+
+'other': 'tenemos # clientes esperando.'
+el # va a tomar el valor de clientes.length
+
+____________________
+
+para cambiar el estilo de boton a primeNg
+SE PUEDE HACER POR DIRECTIVA pButton 
+o por la etiquta <p-buttom>
+hay una diferencia en como usarlo
+
+la diferencia es que si uso
+<p-buttom>
+es un compoente propio de prime ng
+por lo que tendria  que usar sus directivas para configurara el botom
+
+
+al usar slice hace el cambio de la lista, porque hace el ciclo de deteccion de cambios
+si no lo hiciera asi se tendria que volver a recorrer el array de clientes
+
+el 0 y 2 del slice
+lo que hace es hacer que vaya desde la poscion 0 hasta la posicion 2 sin incluila, se corta
+solo para mostrar , no esta cortando el array realmente
+
+
+___________
+pipe keyvaluepipe
+cuando se quiera mostrar un obj literal java scrito en el html
+o trabajar con sus propiedades
+
+suponiendo que se necesita tomar la persona y mostra cada uno de los elementos
+
+es para mostrar cada uno de los valores un obj literario 
+de una forma mas facil con el pipe Keyvalue
+seria
+{{item.key}}:{{item.value}}
+
+etiqueta <b> es para uqe se vea en negrita
+
+___________________
+
+PIPE json
+
+no funciona para el caso en que el obj json es muy complejo y ese obj
+tiene metodos definidos, en ese caso no lo va a poder graficar
+
+toma todo como se ve 
+<pre>{{ persona | json }}</pre>
+
+___________________
+
+ASYNCPIPE
+
+tiene que se un observable si o si
+
+cancela la suscripcion y ayuda a el manejo de promesas
+
+para el ejemplo se importa interval() de rxjs, extensiones reactivas, muy usadas 
+interval(1000)
+el observable va a emitir los valores desde el 0 al 1000
+
+y con el pipe async se emite el valor en el html de forma real
+
+
+se define una promesa 
+con la funcion resolve y la reject en caso de que surja algun error 
+y la funcion resolve es cuando ya finalizo la promesa par que haga algo 
+
+resolve si todo se hace bien 
+
+a la promesa tambien se le puede poner el async
+
+en el html se puede poner el pipe para que el mensaje de que se obtuvo data 
+se muestre cuando se tenga el valor de la promesa, en caso que todavia no la tenga
+se muestre el mensaje de cargando
+
+la expresion !(valorPromesa |async) significa que el pipe async no regresa nada se va a mostrar
+el mensaje resonviendo promesa
+
+el observable para el caso anterior se desaparece porque se ejecuta mientras
+haya una suscripcion, y el pipe hace la suscripcion de forma interna 
+el pipe async hace la suscripcion por su cuenta
+
+____________
+
+PIPE PERSONALIZADOS 
+PARA EL UPPERCASE
+
+hacer que el pipe personalizados funcione
+
+agregamos el router link al menu component ts para navegar a la pagina ordenar
+
+angular cli permite crear pipe personalizados de forma facil
+pero como es la primera vez, lo hacemos a mano
+se crea un nuevo archivo a mano sin comandos
+llamado mayusculas.pipe.ts
+
+tiene que ser .pipe
+
+en la clase se define el nombre y se usa el decorador @Pipe para indicar que es para pipe
+
+en el name del decorador pipe se pone el nombre con el que vamos a usar el pipe
+
+en la clase se implementa el pipeTransform
+
+y se define el metodo que lo va a resolver transform
+
+devuelve un string
+
+para que funcione hay que asociarlo a algun modulo
+y como tenemos definido el moduel ventas, y este pipe estaria relacionado al modulo de venta, lo importamos ahi a a este
+module para pipe
+y lo agregamos en las declarations
+
+
+al pipe le podemos mandar un argumento con : por ejemplo para este caso
+vamos a a hacer que se le pueda mandar el argumento false para que no lo haga mayuscula al 
+texto y lo haga minuscula
+
+simplemente se ele agrega al metodo del pipe creado para que pueda recibir otro parametro
+
+en el segundo parametro se le puede decir que por defecto tome el valor true
+para que no tire error cuando se llame al pipe
+
+otra forma de hacer lo mismo, es haciendo con ternarios
+
+
+ahora para hacer un boton que cambie de mayuscual a minuscula usando el pipe personlaizado
+
+hacer que la funcio click cambie el valor de una variable, y esa variable es el argumento que se le pasa
+al pipe personalizado
+
+this.enMayusculas = !this.enMayusculas;
+
+_______________
+
+toolbar y table ngprime
+
+toolbar es un menu agrupado
+
+hay que importarlo en el prime-ng.module.ts
+
+importar y exportar TableModule,
+    ToolbarModule
+
+y para la table, viendo la doc  hay que usar el CDK npm install
+
+para que ande el virtual scroll y funcione de una manera mas eficiente entre otras cosas que hace
+cdk
+
+ npm install @angular/cdk --save
+
+en la doc para el flex de prime ng se ve el tema para las propiedades para los marjenes
+
+el p-mr-1 es para el margin
+el p-mt-1  el margin desde arriba  con prime ng
+
+p-button-sucess para el color del boton se le da el estilo
+
+se crea un archivo ventas interfaces
+
+y se  crear un export enums color 
+enums es para trabajr con palabras usando numeros
+
+lo que se exporta de la interfaz tambien es el color
+
+y esos datos e muestran en la tabla usando ngprime, para mostrar hay que seguir como se usa 
+el componente
+la ayuda por cada elemento de la lista que tiene una interfaz, no funciona porque estoy dentro
+de otro componente que es el ngprime
+
+_______________________
+
+se hace un pipe personalizado para que muestre el true como vuela, y false no vuela
+
+y podemos concatenar pipes
+para que al que hice le agregue lo de mayuscula
+
+el tittle case hace que cada palabra la ponga con mayuscula 
+
+____________
+
+pipe personalizado para ordenar los arreglos
+
+array.prototype.sort()
+
+para crear un pipe de forma automatica
+en la carpeta pipe
+
+ng g pipe ventas/pipes/ordenar --skipTests
+
+y acctualiza el module correspondiente en ventas
+
+y los ordena utilizando la funcion sort
+
+ver en la documentacion
+va tomando de a 2 y los ordena
+
+si a.nombre es mayor a b.nombre entonces regresa un 1 
+para realizar el cambio de posicion de los objetos
+y si no se cumple regrea -1 por lo que no se hace el cambio
+
+
+se detecta que boton fue el que se presiono
+para hacer la ordenacion correspondiente
+
+se crea una propiedad nombre, para almacenar el valor que se presiono
+
+mete el metodo click para mandar el parametro por el pipe en cada boton
+
+y para no hacer un if para cada caso, se usa un swicht
+
+
+y se resuelve en el pipe ordenar
+
+el switch devuelve por defecto la lista de heroes
+
+para tener en cuenta los valores se ordenan por false y luego por true por defecto
+
+si invierto -1 y 1 muestra primero vuela
+
+para ordenar por forma alfabetica dessendente o ascendente se ve por el orden de los valores -1 y 1
+
+
+________________
+
+usando el sort de ngprime
+
+en el ejemplo de la doc tenemos la propiedad pSortableColumna
+es el nombre de la columna que tiene que hacer match con el dato del objeto
+
+en la definicion del header se cambia por
+
+<th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+
+ese valor SortableColumn="code" tiene que hacer match con alguna de las propiedades de los objetos
+
+y se agrega solamente eso
+ y ya tendria una tabla con filtros
+
+puede ser que ng prime me esta modificando el arreglo entonces en la tabla anterior tambien la afectaria
+
+para solucionar eso, en la segunda tabla le podemos mandar una copia del arreglo pero para que no lo modifique
